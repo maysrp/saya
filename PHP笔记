@@ -1,0 +1,7 @@
+//PHP encode:文件编码
+function str_encode($str){
+        $ar=array("GBK","BIG5","Shift_JIS");
+        $encode=mb_detect_encoding($str,$ar);
+        $string=iconv($encode,"utf-8",$str);//$encode为你之前文件编码格式
+        return $string;
+}
