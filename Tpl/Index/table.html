@@ -1,0 +1,27 @@
+<div class="row">
+	<div class="col-md-1">
+		<a href="/"><h2 class="text-muted">返回</h2></a>
+	</div>
+</div>
+<div class="row">
+	<table class="table">
+		<tr>
+			<th>类型</th>
+			<th>文件名</th>
+			<th>字幕组</th>
+			<th>磁力链接</th>
+			<th>发布时间</th>
+			<th>原始链接</th>
+		</tr>
+		<volist name="info" id="vo">
+			<tr>
+				<td>{$vo['ntype']}</td>
+				<td>{$vo['fname']}</td>
+				<td>{$vo['zname']}</td>
+				<td><a href="{$vo['magnet']}" class="text-success"><span class="glyphicon glyphicon-magnet"></span></a></td>
+				<td>{$vo['ctime']}</td>
+				<td><a href="https://share.dmhy.org{$vo['url']}"><span class="glyphicon glyphicon-link"></span></a></td>
+			</tr>
+		</volist>
+	</table>
+</div>
