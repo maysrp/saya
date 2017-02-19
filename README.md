@@ -36,10 +36,10 @@ crontab -e
 
 ### 权限
 需要777权限的文件夹
-1. /image
-2. /video #若选择NEW，则不需要该文件夹 OndoAction.class.php 里面 111行 和112行 选择其中一种，不要的那个注释掉
-3. /download
-4. /Index/Runtime
+1 /image
+2 /video #若选择NEW，则不需要该文件夹 OndoAction.class.php 里面 111行 和112行 选择其中一种，不要的那个注释掉
+3 /download
+4 /Index/Runtime
 
 ### 数据库
 /Index/Conf/config.php
