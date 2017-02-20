@@ -18,3 +18,28 @@ function str_encode($str){
         $list=array_slice($reall, 25*($_GET['p']-1),25);
         $show=$Page->show();
         $this->assign('page',$show);
+        
+     //PHP tag TALK   
+        
+       protected function admin_control($info){//管理员规则控制
+    		$control_array=D('Control')->select();
+    		foreach ($control_array as $key => $value) {//$value['control']
+    			if($this->tag_match($value['control'],$info)){
+    				return true;//匹配到跳出返回1
+    			}	
+    		}
+    	}
+    	protected function tag_match($control,$info){
+   		$control=trim($control);
+    		$tag=preg_replace('/\s+/', ' ', $control);
+			$tag_array=explode(" ", $tag);
+			foreach ($tag_array as $key => $value) {
+				$pg="/".$value."/i";
+				if(!preg_match($pg, $info)){
+    				return false;
+    				}
+				return true;
+			}
+
+    	}
+
