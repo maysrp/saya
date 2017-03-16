@@ -1,0 +1,21 @@
+apache
+
+.htaccess Http=>https
+```
+# BEGIN WordPress
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+RewriteRule ^index\.php$ - [L]
+RewriteCond   %{HTTPS} !=on
+RewriteRule   ^(.*)  https://%{SERVER_NAME}/secure/$1 [L,R]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
+</IfModule>
+
+# END WordPress
+```
+*RewriteCond   %{HTTPS} !=on*
+
+*RewriteRule   ^(.*)  https://%{SERVER_NAME}/secure/$1 [L,R]*
