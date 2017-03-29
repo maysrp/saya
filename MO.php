@@ -3,9 +3,8 @@
 
 
 #rule
-
-
-
+lollo
+# 
 		function rid($rid){
 			$rid=(int)$rid;
 			$ba=$this->find($rid);
