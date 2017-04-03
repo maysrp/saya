@@ -1,0 +1,6 @@
+function scroll(){
+		var all=document.getElementsByClassName('show')[0].scrollHeight;//JS原生 元素总高度		
+    var height=$(".show").height();//Jquery滚动被隐藏的大小
+    $(".show").scrollTop(all-height);
+	}
+  
