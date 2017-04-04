@@ -1,0 +1,8 @@
+      preg_match_all('/<img.*?src=[\"|\']?(.*?)[\"|\']?\s.*?\/>/i', $post['text'], $image);// array			
+      
+      
+      if(count($image)){
+				$data['image']=json_encode($image[0]);
+			}
+			$tag=preg_replace('/\s+/', ' ', $post['tag']);
+			$tag_array=explode(" ", $tag);
