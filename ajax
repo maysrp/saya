@@ -1,0 +1,3 @@
+beforeSend: function(){
+// Handle the beforeSend event
+},
