@@ -1,0 +1,13 @@
+$count=count($info);
+		$Page= new \Think\Page($count,25);
+		//$Page->setConfig('header',"条弹幕");
+        if($_GET['p']<1){
+             $_GET['p']=1;
+        }else{
+               $_GET['p']=(int)$_GET['p'];//
+        }
+        $list=array_slice($info, 25*($_GET['p']-1),25);
+        $show=$Page->show();
+        $this->assign('page',$show);
+		$this->assign("info",$list);
+		$this->display();
