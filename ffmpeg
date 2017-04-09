@@ -1,0 +1,15 @@
+-s 分辨率
+FFMPEG  -i  uploadfile/video/test.wmv -c:v libx264 -strict -2 uploadfile/mp4/test.mp4
+mp4转换
+–s 352*278
+
+240P 320*240
+360P 640*360
+======
+480p -s 848*480
+720p -s 1280*720
+======
+
+
+1080p -s 1920*1080
+
