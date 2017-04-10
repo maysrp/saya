@@ -1,0 +1,10 @@
+<script type='text/javascript' src="https://cdn.staticfile.org/clipboard.js/1.5.15/clipboard.min.js"></script>
+
+
+<input type="text" name="end" id="end" class="form-control">
+或者
+<div id="end">
+xxx
+</end>
+=======
+<button class="btn btn-info" id="copy"  data-clipboard-target="#end">复制链接</button>
