@@ -17,3 +17,12 @@ StrictModes yes
 4. 重启 ssh  服务
 
 root@ubuntu14:~# sudo service ssh restart
+
+
+负载大于2 舍弃
+
+#!/bin/bash
+m=`uptime | awk '{print int($8)}'`
+if [ "$m" -gt 2 ];then
+	exit
+fi
