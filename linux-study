@@ -1,3 +1,19 @@
 $ rdate -s time.nist.gov
 
 时间同步
+
+2. 以其他账户登录，通过 sudo nano 修改 /etc/ssh/sshd_config :
+
+xxx@ubuntu14:~$ su - root
+Password:
+root@ubuntu14:~# vi /etc/ssh/sshd_config
+3. 注释掉 #PermitRootLogin without-password，添加 PermitRootLogin ye
+
+# Authentication:
+LoginGraceTime 120
+#PermitRootLogin without-password
+PermitRootLogin yes
+StrictModes yes
+4. 重启 ssh  服务
+
+root@ubuntu14:~# sudo service ssh restart
