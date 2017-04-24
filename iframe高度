@@ -1,0 +1,12 @@
+	
+  <iframe class="col-md-10 ckk_iframe"   id="iframepage" name="iframepage" frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="yes"  src="/Admin/Index/danmu"  onLoad="iFrameHeight()"></iframe>
+  
+  JS
+  ：
+  function iFrameHeight() { 
+			var ifm= document.getElementById("iframepage"); 
+			var subWeb = document.frames ? document.frames["iframepage"].document : ifm.contentDocument; 
+			if(ifm != null && subWeb != null) { 
+				ifm.height = subWeb.body.scrollHeight; 
+			} 
+		} 
