@@ -1,3 +1,54 @@
 beforeSend: function(){
 // Handle the beforeSend event
 },
+
+闭包进度 Jquery AJAX
+var xhrOnProgress=function(fun) {
+    	xhrOnProgress.onprogress = fun; 
+    	return function() {
+        	var xhr = $.ajaxSettings.xhr();
+        	if (typeof xhrOnProgress.onprogress !== 'function')
+        	    return xhr;
+        	if (xhrOnProgress.onprogress && xhr.upload) {
+            	xhr.upload.onprogress = xhrOnProgress.onprogress;
+        	}
+        	return xhr;
+    	}
+	}
+  
+  
+  进度条@！！！AJAX上传！
+  $.ajax({
+			url:"/Home/Video/upload",
+			type:"POST",
+			data:fd,
+			processData: false,  // 告诉jQuery不要去处理发送的数据
+  			contentType: false,   // 告诉jQuery不要去设置Content-Type请求头
+  			xhr:xhrOnProgress(function(e){
+  				var pre=e.loaded/e.total;
+  				precent=pre*100;
+  				$("#precent").html("<h4>"+precent+"%</h4>");
+          		$("#progress").css('width',precent+"%");
+          		if(precent>40){
+            		$("#progress").addClass(" progress-bar-info");
+            		$("#up").attr("disabled","disabled");
+          		}
+          		if(precent>90){
+        	    	$("#progress").removeClass(" progress-bar-info");
+    	        	$("#progress").addClass(" progress-bar-success");
+	         	}
+  			}),
+			success:function(data){
+				if(data.status){
+					$("input[name='video_url']").val(data.con);
+					$("#videoname").val("");
+					$("#videoname").attr("placeholder","视频上传成功");
+					$("#video_upload").text("视频上传成功");
+					$("#video_upload").addClass("text-success");
+					$("#up").attr("disabled","disabled");
+				}else{
+					alert(data.con);
+					$("#up").attr("disabled","disabled");
+				}
+			}
+		})
