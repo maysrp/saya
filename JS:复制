@@ -1,0 +1,48 @@
+clipboard.js 的使用方法
+
+clipboard.js 只有3kb大小，无需 Flash，兼容所有现代浏览器，但是经过测试不支持微信内置浏览器。
+
+使用还算简单，简单几步就搞定，下面简单介绍下clipboard.js的使用方法：
+
+1. 首先下载或者使用CDN的资源，目前七牛就支持：
+
+<script type='text/javascript' src="https://cdn.staticfile.org/clipboard.js/1.5.15/clipboard.min.js"></script>
+2. 初始化 clipboard 对象
+
+<script type='text/javascript'>
+var clipboard = new Clipboard('.btn');
+</script>
+3. 定义要复制的对象和点击按钮
+
+<!-- Target -->
+<div id="foo">我爱水煮鱼是最好的博客</div>
+
+<!-- Trigger -->
+<a class="btn"  href="javascript:" data-clipboard-target="#foo">复制</a>
+如果是剪切，加上属性：
+
+data-clipboard-action="cut"
+如果复制的文字是隐藏的，可以通过 data-clipboard-text 定义到点击的按钮上
+
+clipboard.js 的演示
+
+我爱水煮鱼是最好的博客 复制
+
+clipboard.js 的事件
+
+有时候我们需要一些用户反馈，在初始化对象的时候可以定义 success 和 error 两个事件：
+
+var clipboard = new Clipboard('.btn');
+
+clipboard.on('success', function(e) {
+    console.info('Action:', e.action);
+    console.info('Text:', e.text);
+    console.info('Trigger:', e.trigger);
+
+    e.clearSelection();
+});
+
+clipboard.on('error', function(e) {
+    console.error('Action:', e.action);
+    console.error('Trigger:', e.trigger);
+});
