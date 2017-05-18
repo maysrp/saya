@@ -23,15 +23,14 @@ nginx configur file
 17 }
 dl.php
 
-1 <?php
-2 if(!empty($_GET['sign']) && trim($_GET['sign']) == 'ok') {
-3     header("Content-Type: application/octet-stream");
-4     header("X-Accel-Redirect: /file/" . $_GET['file']);
-5 }
-6 else {
-7     header("http/1.1 403 Forbidden");
-8 }
-9 ?>
+ <?php
+ if(!empty($_GET['sign']) && trim($_GET['sign']) == 'ok') {
+     header("Content-Type: application/octet-stream");
+     header("X-Accel-Redirect: /file/" . $_GET['file']);
+ } else {
+    header("http/1.1 403 Forbidden");
+ }
+ ?>
 不只是Nginx支持，其他常见Web Server都支持，只是名称不同。如下：
 nginx: X-Accel-Redirect
 squid: X-Accelerator-Vary
