@@ -1,0 +1,10 @@
+limit_conn_zone $server_name zone=servers:10m;
+主文件配置
+
+
+
+        limit_conn servers 1000;
+        limit_rate_after 500k;
+        limit_rate 50k;
+         limit_conn   one  1; 
+          limit_rate 300k; 
