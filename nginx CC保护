@@ -1,0 +1,4 @@
+ if ($cookie_ClientIP != "xxx.cc-$remote_addr"){
+            add_header Set-Cookie "ClientIP=xxx.cc-$remote_addr";
+            rewrite .* "$scheme://$host$uri" redirect;
+        }
