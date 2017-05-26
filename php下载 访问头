@@ -1,4 +1,4 @@
-ini_set('user_agent','Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1;                                                                                                                                                              .NET CLR 2.0.50727; .NET CLR 3.0.04506.30; GreenBrowser)');
+              ini_set('user_agent','Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; .NET CLR 2.0.50727; .NET CLR 3.0.04506.30; GreenBrowser)');                                                                                             
         $html=file_get_contents($url);
         $no=md5($url);
         @file_put_contents("./torrent/".$type."/".$no.".torrent", $html);
