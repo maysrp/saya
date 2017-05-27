@@ -8,3 +8,8 @@ xxx
 </end>
 =======
 <button class="btn btn-info" id="copy"  data-clipboard-target="#end">复制链接</button>
+
+
+<script type='text/javascript'>
+				var clipboard = new Clipboard('#copy');
+			</script>
