@@ -2,3 +2,14 @@
             add_header Set-Cookie "ClientIP=xxx.cc-$remote_addr";
             rewrite .* "$scheme://$host$uri" redirect;
         }
+
+
+
+set $reView 1;
+        if ($request_uri ~* "/attachment|robots.txt|xmlsitemap.xml|htmlsitemap.htm|rsssitemap.xml|demo.php"){set $reView 0;}
+        if ($http_user_agent ~* "Baidu|Bing|Google|Yandex|Feed|Soso|Yahoo|Sogou|360Spider|Youdao|MicroMessenger"){set $reView 0;}
+        add_header Set-Cookie "ClientIP=MoeClub.org-$remote_addr";
+        if ($cookie_ClientIP != "MoeClub.org-$remote_addr"){set $reView "${reView}1";}
+        if ($reView = "11"){
+                rewrite .* "$scheme://$host$uri" redirect;
+        }
