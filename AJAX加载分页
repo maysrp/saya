@@ -1,0 +1,7 @@
+https://github.com/maysrp/nyaa-collection 
+的index.html
+
+
+注意static中的 css和js
+
+无form标签 但是需要: <fieldset>标签
