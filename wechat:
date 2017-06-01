@@ -1,10 +1,18 @@
 dodgepudding/wechat-php-sdk
 
+image上传：
 
 
 demo:
 
+图片DEMO
+$data=array("media"=>'@./image/a.jpg')
+$info=$wechat->uploadForeverMedia($data,"image");
+$mediaId=$info["mediaId"];
+$wechat->getRev()->image($mediaId)->reply();
 
+
+发送文件
 
 <?php
 include "./class/wechat.class.php";
