@@ -40,13 +40,17 @@ class DanmuController extends HomeBaseController
             }
         }
         //header('Content-type:text/json');
+        $re=isset($re)?$re:[];
         echo json_encode($re);
     }
         
     protected function token($info){//验证
-        $pl=strlen($info['player']);
-        if($pl&&($pl<64)){
-            return true;
+        if(isset($info['player'])){
+            $pl=strlen($info['player']);
+            if($pl&&($pl<64)){
+                return true;
+            }
         }
+       
     }
 }
