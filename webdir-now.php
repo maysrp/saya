@@ -41,3 +41,63 @@
 
         $dir=new dir();
         $dir->dir(".");
+
+
+
+
+
+<?php
+	class webdir{
+		public $currentPath;
+		public $currentPathArray;
+		public function __construct(){
+			isset($_SESSION) OR session_start();
+			$this->currentPathArray=isset($_SESSION['dir'])?$_SESSION['dir']:['.'];
+			$this->currentPath=$this->path($this->currentPathArray);
+		}
+		public function path($array){
+			return implode('/',$array);
+		}
+		public function changePath($key){
+			$currentCount=count($this->currentPathArray);
+			$key=(int)$key>0?(int)$key:0;
+			$nowKey=$key>$currentCount?$currentCount:$key;
+			$this->currentPathArray=array_slice($this->currentPathArray,0,$nowKey+1);
+			$this->setSessionDir()
+			$this->currentPath=$this->path($this->currentPathArray);
+		}
+		public function path($key='',$file=''){//	用于合成path
+			$this->changePath($key);
+			$file=$file?$file:'.';
+			$path=$this->currentPath.'/'.$file;
+			return $path;
+		}
+		protected function extension($path){
+			$info=pathinfo($path);
+			return strtoupper($info['extension']);//大写
+			// return pathinfo($path,PATHINFO_EXTENSION);
+		}
+		protected function setSessionDir(){
+			$_SESSION['dir']=$this->currentPathArray;
+		}
+		protected function fileType($pathFile){
+			if(is_dir($pathFile)){
+
+			}else{
+				$ext=$this->extension($pathFile);
+				switch ($ext) {
+					case 'mp4':
+					case 'avi':
+					case 'rm':
+					case 'rmvb':
+					case 'mkv':
+						# code...
+						break;
+					
+					default:
+						# code...
+						break;
+				}
+			}
+		}
+	}
