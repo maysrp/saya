@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+	<script src="https://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+	<script src="https://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+</head>
+<body class="container">
+	<div class="row">
+		
+	</div>
+	<div class="row dir_list">
+		
+	</div>
+	<div class="row dir_table">
+		
+	</div>
+
+
+	<div class="modal fade view_file" tabindex="-1" role="dialog">
+	  	<div class="modal-dialog modal-lg" role="document">
+	    	<div class="modal-content">
+	      		<div class="modal-header">
+	      			<h2 class="modal-title">
+	      				
+	      			</h2>
+	      		</div>
+	      		<div class="modal-body text-center">
+	      			
+	      		</div>
+	      		<div class="modal-footer">
+    				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+  				</div>
+	    	</div>
+	  	</div>
+	</div>
+	<script type="text/javascript">
+	path('');
+		function path(name){
+			$.ajax({
+				url:'to.php?path='+name,
+				success:function(data){
+					table(data);
+				}
+			})
+		}
+		function setKeyPath(num) {
+			$.ajax({
+				url:'to.php?keypath='+num,
+				success:function(data){
+					table(data);
+				}
+			})
+		}
+		function table(data){
+			$(".dir_table").html("");
+			var table=$("<table class='table'></table>");
+			var trh=$("<tr><th>文件名</th><th>建立时间</th><th>大小</th><th></th><th>操作</th></tr>");
+			trh.appendTo(table);
+			
+			for(d in data.directory){
+				var tr=$("<tr></tr>");
+				var td_n=$("<td>"+data.directory[d].name+"</td>");
+				var td_t=$("<td>"+data.directory[d].ctime+"</td>");
+				var td_s=$("<td>"+data.directory[d].size+"</td>");
+				var td_a=$("<td></td>");
+				var td_o=$("<td><span class='glyphicon glyphicon-folder-open' onclick=\"path('"+data.directory[d].name+"')\"></span></td>");
+				tr.append(td_n);
+				tr.append(td_t);
+				tr.append(td_s);
+				tr.append(td_a);
+				tr.append(td_o);
+				tr.appendTo(table);
+
+			}
+			for(f in data.file){
+				var tr=$("<tr></tr>");
+				var td_n=$("<td>"+data.file[f].name+"</td>");
+				var td_t=$("<td>"+data.file[f].ctime+"</td>");
+				var td_s=$("<td>"+data.file[f].size+"</td>");
+				var td_a=$("<td><span class='glyphicon glyphicon-eye-open' onclick=\"view('"+data.file[f].name+"','"+data.file[f].basename+"','"+data.file[f].size+"','"+data.file[f].extension+"')\"></span></td>");
+				var td_o=$("<td><span class='glyphicon glyphicon-download-alt' onclick=\"download('"+data.file[f].basename+"')\"></span></td>");
+				tr.append(td_n);
+				tr.append(td_t);
+				tr.append(td_s);
+				tr.append(td_a);
+				tr.append(td_o);
+				tr.appendTo(table);
+
+			}
+			table.appendTo(".dir_table");
+			$('.dir_list').html("");
+			for(l in data.dirArray){
+				lc=parseInt(l)+1;
+				var span=$("<span class='btn btn-sm btn-primary' onclick=\"setKeyPath('"+lc+"')\">"+data.dirArray[l]+"</span> ");
+				var ox=$("<span class='label label-success'><b>/</b></span>");
+				span.appendTo('.dir_list');
+				ox.appendTo('.dir_list');
+
+			}
+
+		}
+		function view(name,info,size,type){
+				type=type.toLowerCase();
+				$(".modal-body").html("");
+				$(".modal-title").html("");
+				switch(type){
+					case 'gif':
+					case 'jpg':
+					case 'png':
+						var head=$("<span>"+name+"<small> SIZE: "+size+" </small></span>");
+						head.appendTo(".modal-title");
+						var download=$("<button class='btn btn-sm' onclick=\"download('"+info+"')\">Download</button>");
+						download.appendTo(".modal-title");
+
+						var img=$("<img src=\""+info+"\" style=\"max-width:80%;max-height:80%\">");
+
+						img.appendTo(".modal-body");
+						$(".view_file").modal('show');
+					break;
+					case 'mp4':
+					case 'webm':
+						var head=$("<span>"+name+"<small> SIZE: "+size+" </small></span>");
+						head.appendTo(".modal-title");
+						var download=$("<button class='btn btn-sm' onclick=\"download('"+info+"')\">Download</button>");
+						download.appendTo(".modal-title");
+
+						var video=$("<video src=\""+info+"\" style=\"max-width:80%;max-height:80%\"  controls=\"controls\" id=\"play\"></video>");
+
+						video.appendTo(".modal-body");
+						$(".view_file").modal('show');
+
+					break;
+					case 'mp3':
+						var head=$("<span>"+name+"<small> SIZE: "+size+" </small></span>");
+						head.appendTo(".modal-title");
+						var download=$("<button class='btn btn-sm' onclick=\"download('"+info+"')\">Download</button>");
+						download.appendTo(".modal-title");
+						var audio=$("<audio src=\""+info+"\" style=\"max-width:80%;max-height:80%\"  controls=\"controls\" id=\"play\"></audio>");
+
+						audio.appendTo(".modal-body");
+						$(".view_file").modal('show');
+					break;
+					case 'txt':
+					case 'md':
+					case 'ini':
+					case 'json':
+						var head=$("<span>"+name+"<small> SIZE: "+size+" </small></span>");
+						head.appendTo(".modal-title");
+						var download=$("<button class='btn btn-sm' onclick=\"download('"+info+"')\">Download</button>");
+						download.appendTo(".modal-title");
+						var iframe=$("<div class=\"embed-responsive embed-responsive-16by9\"><iframe class=\"embed-responsive-item\"  src=\""+info+"\" ></iframe></div>");
+						iframe.appendTo(".modal-body");
+						$(".view_file").modal('show');
+					break;
+					default:
+						download(info)
+					break;
+
+				}
+				
+		}
+		function download(info){//可以修改下载插件
+			window.location.href=info;
+		}
+
+		$(".view_file").on('hidden.bs.modal', function (e) {
+  		var play=$("#play")[0];
+  			play.pause();
+		})
+	</script>
+</body>
+</html>

@@ -8,10 +8,12 @@
 			public $currentF;
 			public $json_file;
 			public $password;
+			public $filterArray;
 			public function __construct(){
 				if(!isset($_SESSION)){
 					session_start();
 				}
+				$this->filterArray=['.','..'];
 				$this->password='admin';
 				$this->json_file='./json/info.json';
 				$this->getSessionDir();
@@ -56,6 +58,12 @@
 				}
 			}
 			public function setPath($path){// 设置path 点击下一目录文件
+				$path=trim($path);//防止跳到前一目錄
+				$path=str_replace('/','', $path);
+				if($path=='..'){
+					$path='.';
+				}
+				//
 				$nowPath=$this->currentPath.'/'.$path;
 				if(is_dir($nowPath)){
 					$this->currentPath=$nowPath;
@@ -73,8 +81,10 @@
 					if($dh=opendir($path)){
 						$current;
 						while(($file=readdir($dh))!==false){
-							$file=$path."/".$file;
-							$current[]=$this->info($file);
+							if(!$this->filter($file)){
+								$file=$path."/".$file;
+								$current[]=$this->info($file);	
+							}
 						}
 						$this->current=$current;
 						closedir($dh);
@@ -85,6 +95,7 @@
 				}
 			}
 			public function info($file){
+				$re['name']=$this->basename($file);
 				$re['basename']=$this->currentPath.'/'.$this->basename($file);
 				$re['atime']=$this->atime($file);
 				$re['ctime']=$this->ctime($file);
@@ -193,6 +204,9 @@
 			}
 			protected function getSession($xkey,$dir){
 				
+			}
+			protected function filter($file){//匹配過濾
+					return in_array($file,$this->filterArray);
 			}
 			protected function extension($path){
 				$info=pathinfo($path);
