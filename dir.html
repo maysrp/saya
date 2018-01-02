@@ -94,13 +94,16 @@
 			$('.dir_list').html("");
 			for(l in data.dirArray){
 				lc=parseInt(l)+1;
-				var span=$("<span class='btn btn-sm btn-primary' onclick=\"setKeyPath('"+lc+"')\">"+data.dirArray[l]+"</span> ");
-				var ox=$("<span class='label label-success'><b>/</b></span>");
+				var span=$("<span class='btn btn-sm btn-primary' style='margin:2px;' onclick=\"setKeyPath('"+lc+"')\">"+data.dirArray[l]+"</span> ");
+				var ox=$("<span class='label label-default'><b>/</b></span>");
 				span.appendTo('.dir_list');
 				ox.appendTo('.dir_list');
 
 			}
 
+		}
+		function download(info){//可以修改下载插件
+			window.location.href=info;
 		}
 		function view(name,info,size,type){
 				type=type.toLowerCase();
@@ -156,15 +159,20 @@
 						$(".view_file").modal('show');
 					break;
 					default:
-						download(info)
+						var head=$("<span>"+name+"<small> SIZE: "+size+" </small></span>");
+						head.appendTo(".modal-title");
+						var download=$("<button class='btn btn-sm' onclick=\"download('"+info+"')\">Download</button>");
+						download.appendTo(".modal-title");
+						var TEXT=$("<h3>该文件不支持预览!</h3>");
+						TEXT.appendTo(".modal-body");
+						$(".view_file").modal('show');
 					break;
 
 				}
+
 				
 		}
-		function download(info){//可以修改下载插件
-			window.location.href=info;
-		}
+		
 
 		$(".view_file").on('hidden.bs.modal', function (e) {
   		var play=$("#play")[0];
