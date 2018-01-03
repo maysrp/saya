@@ -9,11 +9,13 @@
 			public $json_file;
 			public $password;
 			public $filterArray;
+			public $filterExtensionArray;
 			public function __construct(){
 				if(!isset($_SESSION)){
 					session_start();
 				}
 				$this->filterArray=['.','..'];
+				$this->filterExtensionArray=['php'];
 				$this->password='admin';
 				$this->json_file='./json/info.json';
 				$this->getSessionDir();
@@ -21,16 +23,23 @@
 			}
 			//-----------------------//
 			public function login(){
-				if($_GET['password']==$this->password){
+				$password=isset($_GET['password'])?$_GET['password']:'';
+				if($password==$this->password){
 					$_SESSION['user']='I love rem';
+					$re['status']=True;
 				}else{
-					//none
+					$_SESSION['user']='';
+					$re['status']=False;
 				}
-				
+				$this->json($re);
 			}
 			public function jugg(){//登入判斷
 				if(isset($_SESSION['user'])){
-					return true;
+					if($_SESSION['user']){
+						return true;
+					}else{
+						return false;
+					}
 				}else{
 					return false;
 				}
@@ -81,12 +90,10 @@
 					if($dh=opendir($path)){
 						$current;
 						while(($file=readdir($dh))!==false){
-							if(!$this->filter($file)){
-								$file=$path."/".$file;
-								$current[]=$this->info($file);	
-							}
+							$file=$path."/".$file;
+							$current[]=$this->info($file);	
 						}
-						$this->current=$current;
+						$this->current=$current;//保留全部
 						closedir($dh);
 					}
 					return True;
@@ -101,15 +108,24 @@
 				$re['ctime']=$this->ctime($file);
 				$re['mtime']=$this->mtime($file);
 				if(is_dir($file)){
-					$re['extension']='';
-					$re['dir']=True;
-					$re['size']='';
-					$this->currentD[]=$re;
+					if(!$this->filter($re['name'])){
+						$re['extension']='';
+						$re['dir']=True;
+						$re['size']='';
+						$this->currentD[]=$re;
+					}else{
+
+					}
 				}else{
 					$re['extension']=$this->extension($file);
-					$re['dir']=False;
-					$re['size']=$this->fileSize($file);
-					$this->currentF[]=$re;
+					if(!$this->filterExtension($re['extension'])){
+						$re['dir']=False;
+						$re['size']=$this->fileSize($file);
+						$this->currentF[]=$re;
+					}else{
+
+					}
+					
 				}
 				
 				return $re;
@@ -183,6 +199,10 @@
 			}
 			public function download($info){//用于下载生成
 			}
+			public function randkey(){
+				$va=mt_rand(1,999999).mt_rand(1,999999);
+				return md5($va);
+			}
 			public function htmlTable(){//用于生成列表
 			
 				foreach ($this->currentD as $key => $value) {//directory
@@ -205,17 +225,21 @@
 			protected function getSession($xkey,$dir){
 				
 			}
+			protected function filterExtension($ex){//匹配過濾
+				return in_array($ex,$this->filterExtensionArray);
+			}
 			protected function filter($file){//匹配過濾
 					return in_array($file,$this->filterArray);
 			}
 			protected function extension($path){
 				$info=pathinfo($path);
-				return strtoupper($info['extension']);//大写
+				$info['extension']=isset($info['extension'])?$info['extension']:' ';
+				return strtolower($info['extension']);//大写
 				// return pathinfo($path,PATHINFO_EXTENSION);
 			}
 			protected function basename($path){
 				$info=pathinfo($path);
-				return strtoupper($info['basename']);//大写
+				return $info['basename'];//大写
 				// return pathinfo($path,PATHINFO_BASENAME);
 			}
 			protected function fileSize($path){
@@ -257,27 +281,63 @@
 				}
 				return $re;
 			}
+			public function doit(){
+				if($this->jugg()){
+					$this->ini();
+				}else{
+					$this->login();
+				}
+			}
+			public function ini(){
+				date_default_timezone_set("PRC");
+				$setKeyPath=isset($_GET['keypath'])?$_GET['keypath']:'';
+				$setPath=isset($_GET['path'])?$_GET['path']:'';
+				if($setKeyPath||$setPath){
+					if($setKeyPath){
+						$this->keyPath($setKeyPath);
+					}else{
+						$this->setPath($setPath);
+					}
+				}else{
+					$this->keyPath(count($this->currentPathArray));
+				}
+				$rf['dir']=$this->currentPath;
+				$rf['dirArray']=$this->currentPathArray;
+				$rf['file']=$this->currentF;
+				$rf['directory']=$this->currentD;
+				$rf['status']=True;
+				$this->json($rf);
+			}
 			
 		}
 		
 		date_default_timezone_set("PRC");
+		error_reporting(E_ALL^E_NOTICE^E_WARNING);
 		$wd=new webdir();
-		$setKeyPath=isset($_GET['keypath'])?$_GET['keypath']:'';
-		$setPath=isset($_GET['path'])?$_GET['path']:'';
-		if($setKeyPath||$setPath){
-			if($setKeyPath){
-				$wd->keyPath($setKeyPath);
-			}else{
-				$wd->setPath($setPath);
-			}
-		}else{
-			$wd->keyPath(count($wd->currentPathArray));
-		}
-		$rf['dir']=$wd->currentPath;
-		$rf['dirArray']=$wd->currentPathArray;
-		$rf['file']=$wd->currentF;
-		$rf['directory']=$wd->currentD;
-		$wd->json($rf);
+		$wd->doit();
+		// $rkey=$wd->randkey();//随机Key
+		// if($wd->jugg()){
+		// 	$setKeyPath=isset($_GET['keypath'])?$_GET['keypath']:'';
+		// 	$setPath=isset($_GET['path'])?$_GET['path']:'';
+		// 	if($setKeyPath||$setPath){
+		// 		if($setKeyPath){
+		// 			$wd->keyPath($setKeyPath);
+		// 		}else{
+		// 			$wd->setPath($setPath);
+		// 		}
+		// 	}else{
+		// 		$wd->keyPath(count($wd->currentPathArray));
+		// 	}
+		// 	$rf['dir']=$wd->currentPath;
+		// 	$rf['dirArray']=$wd->currentPathArray;
+		// 	$rf['file']=$wd->currentF;
+		// 	$rf['directory']=$wd->currentD;
+		// 	$wd->json($rf);
+		// }else{
+		// 	$this->login();
+		// }
+
+		
 
 
 ?>
