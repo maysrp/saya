@@ -1,0 +1,9 @@
+feedparser
+d=feedparser.parse('https://mikanani.me/RSS/Classic')
+d.entries[10].id [名]
+d.entries[10].summary [名+大小]
+d.entries[0].links[2].href [种子地址]
+
+[BTjia]妖怪旅馆营业中.03.HDTV.H264.mp2.1080P.繁体/英/马来/印尼字.TS[内挂DVBSUB]
+
+[BTjia]妖怪旅馆营业中.03.HDTV.H264.mp2.1080P.繁体/英/马来/印尼字.TS[内挂DVBSUB][1.9GB]
