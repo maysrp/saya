@@ -1,0 +1,49 @@
+var allt=$("#sk-body>.sk-bangumi")
+var m=new Map()
+for(var i=0;i<allt.length;i++){
+	if(i<7){
+		var name=$(allt[i]).find(".row").attr("id")
+		var one=$(allt[i]).find(".an-info-group")
+		m[name]=new Map()
+		for(var t=0;t<one.length;t++){
+			m[name][$(one[t]).find("a").text()]="https://mikanani.me"+$(one[t]).find("a").attr("href")
+		}
+	}
+}
+jsoninfo=JSON.stringify(m)
+console.log(jsoninfo)
+#json字符串 直接使用 python 数组
+
+
+
+
+
+
+
+import re
+import sqlite3
+import requests
+from pyquery import PyQuery as pq
+
+db=sqlite3.connect('mikananime.db')
+cursor=db.cursor()
+
+url='https://mikanani.me/Home/Bangumi/1614'
+web=requests.get(url)
+html=pq(web.text)
+suball=html('.subgroup-text')
+# suball=html('.subgroup-text').find('a:eq(1)').text()
+for si in suball:
+    # sub=pq(si).find('a:eq(1)').text()
+    print(pq(si).children(":first").text())
+    m=pq(si).next('table>tbody').find('tr')
+    for cc in m:
+        info=pq(cc).find('.magnet-link-wrap').text()
+        print(info)
+        size=pq(cc).find('td').eq(2).text()
+        print(size)
+        magnet=pq(cc).find('.magnet-link').attr('data-clipboard-text')
+        print(magnet)
+        d=re.findall(r'\[\d+\]',info)
+        print(d)
+    # sprint('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxn')
