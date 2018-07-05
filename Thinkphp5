@@ -1,0 +1,19 @@
+lnmp vhost add 添加完后，修改域名配置文件
+
+root  /home/wwwroot/域名目录/public;    //工作目录配置到public
+修改fastcgi.conf
+
+
+#fastcgi_param PHP_ADMIN_VALUE "open_basedir=$document_root/:/tmp/:/proc/";
+fastcgi_param PHP_ADMIN_VALUE "open_basedir=$document_root/../:/tmp/:/proc/";
+　　
+
+配置重写，统一放在 other.conf，因为所有的域名配置文件均引用了该配置
+
+
+location / {
+            if (!-e $request_filename){
+                rewrite ^/(.*)$ /index.php?s=/$1 last;
+            }
+}
+ 
