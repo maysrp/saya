@@ -1,0 +1,15 @@
+apt-get
+openssh-client
+openssh-server
+
+sudo /etc/init.d/ssh start #服务器启动ssh-server服务，
+
+
+sudo /etc/init.d/ssh stop #server停止ssh服务
+sudo /etc/init.d/ssh restart #server重启ssh服务
+
+
+ssh-server配置文件 /etc/ssh/sshd_config
+
+#PermitRootLogin without-password
+PermitRootLogin yes
