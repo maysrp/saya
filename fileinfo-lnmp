@@ -1,0 +1,27 @@
+lnmp安装fileinfo扩展
+1、错误：
+
+　　PHP Fileinfo extension must be installed/enabled to use Intervention Image.
+
+2、原因：
+
+　　缺少 fileinfo扩展，一般安装包编译的时候考虑到fileinfo需要的资源比较多，所以没有在安装的时候编译安装这个扩展。
+
+3、解决方案：
+
+　　1) 从完整版安装包中解压相应的php版本tar包，在ext文件夹下找到fileinfo
+
+　　2) 安装扩展　　　
+
+cd /lnmp1.2-full/src/php-5.6.9/ext/fileinfo
+ 
+/usr/local/php/bin/phpize
+ 
+./configure --with-php-config=/usr/local/php/bin/php-config
+ 
+make && make install
+　　3) 修改php.ini文件，添加fileinfo扩展
+
+　　　　extension = fileinfo.so
+
+　　4) 重启服务器和php-fpm后在phpinfo即可看到fileinfo已经开启
