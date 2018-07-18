@@ -1,0 +1,10 @@
+https://github.com/Neilpang/acme.sh/wiki/%E8%AF%B4%E6%98%8E
+
+curl  https://get.acme.sh | sh
+alias acme.sh=~/.acme.sh/acme.sh
+
+
+acme.sh  --issue  -d mydomain.com -d www.mydomain.com  --webroot  /home/wwwroot/mydomain.com/
+
+自动在屏幕打印出crt证书 保存起来：
+在/.acme.sh/mydomain.com／有key和cer文件
