@@ -9,3 +9,14 @@ file_uploads = on
 upload_tmp_dir = /tmp
 upload_max_filesize = 32m
 post_max_size = 32m
+
+
+NGINX
+
+    keepalive_timeout  100;        
+    #这个参数表示http连接超时时间，默认是65s。要是上传文件比较大，在规定时间内没有上传完成，就会自动断开连接！所以适当调大这个时间。       
+    
+    client_header_timeout 120s;        #调大点
+    client_body_timeout 120s;          #调大点
+    client_max_body_size 100m;         #主要是这个参数，限制了上传文件大大小
+    client_body_buffer_size 256k;   
