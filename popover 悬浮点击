@@ -1,0 +1,11 @@
+<button type="button" class="btn btn-lg btn-danger" data-toggle="popover" data-html="true" title="Popover title" data-content="<h1>666</h1>">
+点我弹出/隐藏弹出框
+</button>
+<script>
+$(function () {
+  $('[data-toggle="popover"]').popover()
+})
+$(function(){
+  $('[data-toggle="popover"]').popover()
+})
+</script>
