@@ -1,0 +1,5 @@
+function domain(){
+    var url=window.location.href;
+    var domain=url.match(/(http|https):\/\/.*\.(com|net|org|cn|cc|pw|co|club|moe|xin|pub)/);
+    return domain[0];
+}
