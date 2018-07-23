@@ -26,3 +26,8 @@ time ffmpeg -ss 00:02:06 -i test1.flv -f image2 -y test1.jpg
 
 time ffmpeg -ss 123 -i test1.flv -f image2 -y test1.jpg
 ［此处为123秒 可以直接使用该命令］
+
+
+ffmpeg -ss 00:00:00 -i input.mp4 -c copy -t 60 output.mp4
+
+截取60秒视频
