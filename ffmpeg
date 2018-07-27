@@ -31,3 +31,14 @@ time ffmpeg -ss 123 -i test1.flv -f image2 -y test1.jpg
 ffmpeg -ss 00:00:00 -i input.mp4 -c copy -t 60 output.mp4
 
 截取60秒视频
+
+
+ffmpeg -i 1.mp4  -f hls  -hls_time 20 -hls_list_size 0 index.m3u8 2>&1|tee ts.log
+
+把视频转换HLS成TS格式并且以每20秒一个片段分片
+
+ 
+
+ffmpeg -i 1.mp4  -acodec copy -vcodec copy -ss 123 1do.mp4
+
+从123秒出截取视频
