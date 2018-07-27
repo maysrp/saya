@@ -1,0 +1,30 @@
+Tp5
+$where['id']=9;
+$where['max']=['>',12];用于判断大小等
+Db::name('tables')->where($where)->select()  多个数据且为空时也不为零 需要使用count()==0
+                                    ->find() 单条数据
+                                    
+order()
+update()
+insert()
+insertGetId() 返回插入ID
+多个
+where()->
+用于关联查询
+  Db::name('tables')->where($where)->('uid>xid')->select()                                   
+ 当uid大于xid 并且满足前面的where条件
+ 
+ where($where)->whereOr($wr)
+                                    
+控制器
+
+跨控制器调用
+$ad=controller('admin')
+$ad->find()
+------
+use app\index\controller\admin as admin;
+$ad=new admin;
+$ad->find()
+
+
+
