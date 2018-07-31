@@ -28,3 +28,6 @@ $ad->find()
 
 
 
+模版
+把$info.js转意为原来的HTML代码
+{$info.js|htmlspecialchars_decode}
