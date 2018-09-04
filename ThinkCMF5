@@ -1,0 +1,3 @@
+<a class="js-ajax-dialog-btn" href="/user/comment/delete/pid/35.html" data-msg="您确定要删除评论吗？" data-ok="" data-cacel="取消">删除评论</a>
+
+直接调取 dialog框
