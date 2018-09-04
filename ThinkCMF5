@@ -1,3 +1,21 @@
-<a class="js-ajax-dialog-btn" href="/user/comment/delete/pid/35.html" data-msg="您确定要删除评论吗？" data-ok="" data-cacel="取消">删除评论</a>
+<a class="js-ajax-dialog-btn" href="/user/comment/delete/pid/35.html" data-msg="您确定要删除评论吗？" data-ok="" data-cacel="取消">
+删除评论
+</a>
 
 直接调取 dialog框
+
+$this->redirect($_SERVER['HTTP_REFERER']);//直接返回上一页面
+
+JS
+javascript:history.back(-1);
+
+
+$this->redirect('News/category', ['cate_id' => 2], 302, ['data' => 'hello']);
+
+
+
+input('server.PHP_SELF');
+
+input('server.HTTP_REFERER');
+
+input('server.');
