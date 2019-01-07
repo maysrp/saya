@@ -12,6 +12,6 @@ $ echo "net.core.default_qdisc=fq" >> /etc/sysctl.conf&&echo "net.ipv4.tcp_conge
 ```
 $ sysctl net.ipv4.tcp_available_congestion_control
 
-net.ipv4.tcp_available_congestion_control = bbr cubic reno #成功开启 
+net.ipv4.tcp_available_congestion_control = reno cubic bbr #成功开启 
 ```
 
