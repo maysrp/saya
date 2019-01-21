@@ -64,5 +64,5 @@ echo "rsync -avzP --delete --password-file=/etc/rsync.pwd 用户名@服务端ip:
 
 执行`sh /root/back.sh`即可运行备份。  
 `crontab -e`中添加一个定时任务:
-`* * */1 * * sh /root/back.sh `每日执行一次备份
-
+`* * */1 * * sh /root/back.sh `每日执行一次备份  
+在命令中添加–bwlimit=1000 限制速度为1000kbps，100M需要–bwlimit=100000
